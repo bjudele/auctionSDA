@@ -1,5 +1,7 @@
 package com.sda.auction.jwt;
 
+import com.sda.auction.dto.HeaderDto;
+import com.sda.auction.mapper.HeaderMapper;
 import com.sda.auction.model.Role;
 import com.sda.auction.model.User;
 import io.jsonwebtoken.Claims;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,12 +31,14 @@ public class TokenProvider implements InitializingBean {
 
 	private Key signingKey;
 
-
 	@Value("${jwt.role.admin.protected}")
 	private String adminProtectedPaths;
 
 	@Value("${jwt.role.user.protected}")
 	private String userProtectedPaths;
+
+	@Autowired
+	private HeaderMapper headerMapper;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -50,10 +55,6 @@ public class TokenProvider implements InitializingBean {
 	}
 
 	public boolean validate(String jwt, String requestURL) {
-		if (requestURL.compareTo("/api/login") == 0
-				|| requestURL.compareTo("/api/register") == 0) {
-			return true;
-		}
 		Optional<Claims> optionalClaims = decodeJwt(jwt);
 		if (!optionalClaims.isPresent()) {
 			return false;
@@ -93,9 +94,22 @@ public class TokenProvider implements InitializingBean {
 	}
 
 	public String getEmailFrom(String jwt) {
-		return Jwts.parser()
+		try {
+			return Jwts.parser()
+					.setSigningKey(signingKey)
+					.parseClaimsJws(jwt)
+					.getBody().get("email", String.class);
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	public HeaderDto getHeaderDtoFrom(String jwt) {
+		Claims claim = Jwts.parser()
 				.setSigningKey(signingKey)
 				.parseClaimsJws(jwt)
-				.getBody().get("email", String.class);
+				.getBody();
+		return headerMapper.map(claim);
 	}
 }

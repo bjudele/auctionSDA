@@ -1,5 +1,6 @@
 package com.sda.auction.service.impl;
 
+import com.sda.auction.dto.HeaderDto;
 import com.sda.auction.dto.LoginDto;
 import com.sda.auction.jwt.TokenProvider;
 import com.sda.auction.model.User;
@@ -8,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,9 @@ public class SecurityServiceImpl implements SecurityService {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private TokenProvider tokenProvider;
+
+	@Value("${jwt.role.public}")
+	private String publicPaths;
 
 	@Override
 	public boolean passwordMatch(LoginDto userDto, User user) {
@@ -49,16 +54,39 @@ public class SecurityServiceImpl implements SecurityService {
 
 		String requestURL = httpServletRequest.getRequestURI();
 		String jwt = resolveToken(httpServletRequest);
-
-		boolean result = tokenProvider.validate(jwt, requestURL);
-		if (result) {
-			String ownerEmail = tokenProvider.getEmailFrom(jwt);
-			httpServletRequest.setAttribute("ownerEmail", ownerEmail);
+		if (isPublicPath(requestURL)) {
+			return true;
 		}
-		return result;
+		return tokenProvider.validate(jwt, requestURL);
+	}
+
+	@Override
+	public boolean isPublicPath(String requestURL) {
+		String[] paths = publicPaths.split(",");
+		for (String path : paths) {
+			if (path.compareTo(requestURL) == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void setUserEmailOn(ServletRequest servletRequest) {
+		HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+		String jwt = resolveToken(httpServletRequest);
+		String ownerEmail = tokenProvider.getEmailFrom(jwt);
+		httpServletRequest.setAttribute("ownerEmail", ownerEmail);
+	}
+
+	@Override
+	public HeaderDto getHeaderDtoFor(HttpServletRequest request) {
+		String jwt = resolveToken(request);
+		return tokenProvider.getHeaderDtoFrom(jwt);
 	}
 
 	//	"Bearer adsadsafisafsakjskjdsa.sadjsaksaksajk.sakjddsakdsakdsa"
+
 	private String resolveToken(HttpServletRequest httpServletRequest) {
 		String bearerToken = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

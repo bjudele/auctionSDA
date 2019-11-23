@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Aroma Shop - Login</title>
+	<link rel="icon" href="resources/img/Fevicon.png" type="image/png">
+  <link rel="stylesheet" href="resources/vendors/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="resources/vendors/fontawesome/css/all.min.css">
+	<link rel="stylesheet" href="resources/vendors/themify-icons/themify-icons.css">
+	<link rel="stylesheet" href="resources/vendors/linericon/style.css">
+  <link rel="stylesheet" href="resources/vendors/owl-carousel/owl.theme.default.min.css">
+  <link rel="stylesheet" href="resources/vendors/owl-carousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="resources/vendors/nice-select/nice-select.css">
+  <link rel="stylesheet" href="resources/vendors/nouislider/nouislider.min.css">
+
+  <link rel="stylesheet" href="resources/css/style.css">
+
+
+</head>
+<body>
+<header class="header_area">
+	<div class="main_menu">
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<div class="container">
+				<a class="navbar-brand logo_h" href="home.html"><img src="img/logo.png" alt=""></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+					<ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+						<li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+
+						<li class="nav-item adminOnly"><a class="nav-link" href="myItems.html">My items</a></li>
+						<li class="nav-item userOnly"><a class="nav-link" href="myBids.html">My bids</a></li>
+						<li class="nav-item adminOnly active"><a class="nav-link" href="addItem.html">Add item</a></li>
+
+					</ul>
+
+					<ul class="nav-shop">
+						<li class="nav-item"><i class="ti-user"></i><span class="nav-shop__circle">Hello, Bogdan</span> </li>
+						<li class="nav-item"><a class="button button-header" href="#">Log out</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+</header>
+  
+  <!--================Login Box Area =================-->
+	<section class="addItem_box_area section-margin">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="login_form_inner">
+						<h3>Add an item to our auction</h3>
+						<form class="row addItem_form" action="#/" id="addItem_form" >
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="name" name="name"
+											 placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="textarea" class="form-control" id="description" name="description"
+											 placeholder="Description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="category" name="category"
+											 placeholder="Category" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Category'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="number" class="form-control" id="startingPrice" name="startingPrice"
+											 placeholder="Starting price" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Starting price'">
+							</div>
+
+							<div class="col-md-12 form-group">
+								<input type="date" class="form-control" id="startDate" name="startDate"
+											 placeholder="Start date" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start date'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="date" class="form-control" id="endDate" name="endDate"
+											 placeholder="End date" onfocus="this.placeholder = ''" onblur="this.placeholder = 'End date'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="file" class="form-control" id="photo" name="photo"
+											 placeholder="Photo" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Photo'">
+							</div>
+
+							<div class="col-md-12 form-group">
+								<button type="button" value="submit" class="button button-login w-100">Add item</button>
+
+							</div>
+							<div class="col-md-12 form-group loginError">
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+  <script src="resources/vendors/jquery/jquery-3.2.1.min.js"></script>
+  <script src="resources/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="resources/vendors/skrollr.min.js"></script>
+  <script src="resources/vendors/owl-carousel/owl.carousel.min.js"></script>
+  <script src="resources/vendors/nice-select/jquery.nice-select.min.js"></script>
+  <script src="resources/vendors/jquery.ajaxchimp.min.js"></script>
+  <script src="resources/vendors/mail-script.js"></script>
+  <script src="resources/js/main.js"></script>
+
+	<script src="resources/js/addItem.js"></script>
+</body>
+</html>

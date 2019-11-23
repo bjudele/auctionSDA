@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -40,15 +41,17 @@ public class Item {
 	private Date startDate;
 	@Column
 	private Date endDate;
-
 	@Column
 	private String category;
+	@Lob
+	@Column
+	private String photo;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "user_id")
 	private User owner;
 
-	@OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
 	private Set<Bid> bids = new HashSet<>();
 
 //	@ManyToMany(cascade = CascadeType.ALL)

@@ -16,6 +16,7 @@ function login() {
     success: function (data, textStatus, jQxhr) {
       localStorage.jwt = data.jwt;
       console.log('success: ' + localStorage.jwt);
+      window.location.href = "home.html";
     },
     error: function (jqXhr, textStatus, errorThrown) {
       const errorsArray = jqXhr.responseJSON.errors;
